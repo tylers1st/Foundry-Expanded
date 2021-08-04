@@ -1,0 +1,77 @@
+/* This is a macro designed to automate a script from a journal into a token
+*
+*
+*
+*
+*/
+
+let d = new Dialog({
+  title: 'Example',
+  content: `
+    <form class="flexcol">
+      <div class="form-group">
+        <label for="tokenNameInput">Token Name</label>
+        <input type="text" name="tokenNameInput" placeholder="Enter Token's Name">
+      </div>
+      <div class="form-group">
+        <label for="journalInput">Journal Name</label>
+        <input type="text" name="journalInput" placeholder="Enter Journal">
+      </div>
+    </form>
+  `,
+  buttons: {
+    no: {
+      icon: '<i class="fas fa-times"></i>',
+      label: 'Cancel'
+    },
+    yes: {
+      icon: '<i class="fas fa-check"></i>',
+      label: 'Yes',
+      callback: (html) => {
+        let tokenName = html.find('[name="tokenNameInput"]').val();
+        let journalName = html.find('[name="journalInput"]').val();
+        console.log(tokenName, journalName);
+
+        let spkr = canvas.tokens.objects.children.find(e => e.name === tokenName).data; // Finds a token on the current screen with dialog input
+        let messageIndex = 0;
+        let messageList = game.journal.getName(journalName).data.content.split(`<p>${tokenName}:`);
+        console.log(`attempted to load \n\`game.journal.getName(${journalName}).data.content.split(\`<p>${tokenName}:\`)`);
+        let messageArr = []; //This will be the actual list of messages to send
+        let arrTemp;
+
+        for(let i = 1; i < messageList.length; i++){ //for each message in the original list, phase out text past the next </p>
+            arrTemp = messageList[i].split(`</p>`);
+            console.log(`Attempted to tokenize phrase \"${messageList[i]}\" \n|| and got ||\n \"${arrTemp}\"`);
+            messageArr[i-1] = arrTemp[0];
+            console.log(`added \"${arrTemp[0]}\" to message array`);
+        }
+        console.log(`messageIndex = ${messageIndex}`);
+
+        let myDialog = new Dialog({
+            title: `Continue?`,
+            content: 'Do you want to continue to the next line?',
+            buttons: {
+                Next:{
+                    label: "<p>Next</p>",
+                    callback: () => {
+                        canvas.hud.bubbles.say(spkr, messageArr[messageIndex]);
+                        messageIndex++;
+                        if (messageIndex < messageArr.length){
+                            myDialog.render(true);
+                        }
+                    }
+                }
+            },
+        },
+    {
+    id: 'test'
+    }
+    ).render(true);
+      }
+    }
+  },
+  default: 'yes',
+  close: () => {
+    console.log('Example Dialog Closed');
+  },
+}).render(true);
