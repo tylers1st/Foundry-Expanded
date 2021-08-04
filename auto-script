@@ -6,7 +6,7 @@
 */
 
 let d = new Dialog({
-  title: 'Example',
+  title: 'Auto Script Reader',
   content: `
     <form class="flexcol">
       <div class="form-group">
@@ -47,7 +47,7 @@ let d = new Dialog({
         }
         console.log(`messageIndex = ${messageIndex}`);
 
-        let myDialog = new Dialog({
+        let tokenUpdater = new Dialog({
             title: `Continue?`,
             content: 'Do you want to continue to the next line?',
             buttons: {
@@ -57,14 +57,14 @@ let d = new Dialog({
                         canvas.hud.bubbles.say(spkr, messageArr[messageIndex]);
                         messageIndex++;
                         if (messageIndex < messageArr.length){
-                            myDialog.render(true);
+                            tokenUpdater.render(true);
                         }
                     }
                 }
             },
         },
     {
-    id: 'test'
+    id: 'updater'
     }
     ).render(true);
       }
