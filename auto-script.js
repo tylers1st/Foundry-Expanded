@@ -2,7 +2,7 @@
  *  Author: tylers1st <https://github.com/tylers1st>
  *  Version: 0.1
  *
- *  Desc: This is a macro designed to automate a set of lines from a journal into a token
+ *  Desc: This is a macro designed to automate a set of lines from a journal into a token as chat bubbles
  */
 
 
