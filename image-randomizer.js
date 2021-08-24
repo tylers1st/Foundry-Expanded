@@ -24,6 +24,9 @@ if(canvas.tokens.controlled.length == 1){
 
   canvas.tokens.updateMany(update);
 }
-else{
-  ui.notifications.warn("You may only select one token.")
+else if (canvas.tokens.controlled > 1){
+  ui.notifications.warn("You may only select one token.");
+}
+else {
+    ui.notifications.warn("You must select one token.");
 }
