@@ -2,15 +2,23 @@
  *  Author: tylers1st <https://github.com/tylers1st>
  *  Version: 0.1
  *
- *  Desc: This is a macro designed to automate a set of lines from a journal into a token
- */
-
-
-/*
- *  Looks for any controlled tokens on currently viewed scene. If there aren't controlled tokens,
- *  the program asks for the journal with the names of the tokens.
- *  If there are tokens controlled, it only asks for the journal with the lines.
+ *  Desc: This is a macro designed to automate a set of lines from a journal into a token as chat bubbles
+ *  Setup: Make a journal with a unique name. Then make the script (be sure to create a new line for each line. For those
+ *  who would like to know, it's split by "</p>"). The formatting is 
+ *  <token's name>:
+ *  <token's name>: 
+ * 
+ *  Once you've created the journal and the script using the above formatting, you can either select tokens on the currently viewed scene
+ *  and actvate the macro, then enter the journal's name, or if you don't select any tokens, you can manually add their names separated by a comma and no spaces
+ *  
+ *  After that the only thing left to do is confirm that everything is correct and press "Confirm"
+ *  A small window will show up for each token that was selected and every time you press the button, the next line will be said by the token. 
  *
+ *
+ *  If you can't get this to work, first be sure that it is formatted correctly. 
+ *  1. The token's name in the journal and the token itself must be exactly the same. It is case sensitive
+ *  2. In the journal, immediately following the token's name on each line must be a colon
+ *  3. If this still doesn't work, I have a discord server https://discord.gg/FXYbq7kjcH for if you have any questions
  */
 
 
@@ -31,13 +39,13 @@ if (canvas.tokens.controlled.length < 1){
       </form>
       `,
       buttons: {
-        no: {
+        cancel: {
           icon: '<i class="fas fa-times"></i>',
           label: 'Cancel'
         },
-        yes: {
+        confirm: {
           icon: '<i class="fas fa-check"></i>',
-          label: 'Yes',
+          label: 'Confirm',
           callback: (html) => {
             let tokenInput = html.find(`[name="tokenNameInput"]`).val();
             let journalName = html.find('[name="journalInput"]').val();
@@ -86,13 +94,13 @@ else if (canvas.tokens.controlled.length >= 1){
       </form>
       `,
       buttons: {
-        no: {
+        cancel: {
           icon: '<i class="fas fa-times"></i>',
           label: 'Cancel'
         },
-        yes: {
+        confirm: {
           icon: '<i class="fas fa-check"></i>',
-          label: 'Yes',
+          label: 'Confirm',
           callback: (html) => {
             let controlledTokens = canvas.tokens.controlled;
             let journalName = html.find('[name="journalInput"]').val();
