@@ -17,12 +17,13 @@ if(canvas.tokens.controlled.length == 1){
   const update = [];
 
   update.push({
-    _id: tok.id,
+    id: tok.id,
     img: newImage
   });
   console.log(newImage);
 
-  canvas.tokens.updateMany(update);
+//  console.log(typeof(update[0])); for testing
+  canvas.tokens.updateAll(update[0]);
 }
 else if (canvas.tokens.controlled > 1){
   ui.notifications.warn("You may only select one token.");
